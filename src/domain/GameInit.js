@@ -1,3 +1,5 @@
+import { Troop } from "./Troop";
+
 export function spawnTroops(totalCellCnt) {
   const gridDim = Math.sqrt(totalCellCnt);
   const blank = Array(totalCellCnt);
@@ -10,16 +12,14 @@ export function spawnTroops(totalCellCnt) {
       const currentMirror = (gridDim - 1 - r) * gridDim + gridDim - 1 - c;
 
       if (current === currentMirror) {
-        blank[current] = { troopCount: 0, troopOwner: "none" };
+        blank[current] = Troop.buildNeutrual(0);
       } else {
-        blank[current] = {
-          troopCount: count,
-          troopOwner: isMine ? "blue" : "red",
-        };
-        blank[currentMirror] = {
-          troopCount: count,
-          troopOwner: !isMine ? "blue" : "red",
-        };
+        blank[current] = isMine
+          ? Troop.buildMine(count)
+          : Troop.buildEnemy(count);
+        blank[currentMirror] = !isMine
+          ? Troop.buildMine(count)
+          : Troop.buildEnemy(count);
       }
     }
   }
