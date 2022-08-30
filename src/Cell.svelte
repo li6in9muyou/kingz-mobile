@@ -1,7 +1,7 @@
 <script>
-  import {Terrain} from "./domain/Terrain";
+  import { Terrain } from "./domain/Terrain";
 
-  export let data=Terrain.buildPlain();
+  export let data = Terrain.buildPlain();
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
@@ -32,7 +32,7 @@
     class:mountain={terrain.isMountain}
     class:home-base={terrain.isHome || terrain.isEnemyHome}
     on:click={handleClick}
-  ></div>
+  />
 {/if}
 
 <style>
@@ -64,7 +64,7 @@
   .fortress {
     --thickness: 4px;
     outline: solid var(--thickness) darkolivegreen;
-    outline-offset: calc(-1*var(--thickness));
+    outline-offset: calc(-1 * var(--thickness));
   }
 
   .mountain {

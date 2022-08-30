@@ -1,7 +1,7 @@
 import { Troop } from "./Troop";
 import { Terrain } from "./Terrain";
 import { GRID_DIM, GRID_SIZE } from "../GameConfig";
-import { GameState } from "./GameState";
+import { GameCells } from "./GameState";
 
 export function spawnTroops(cells) {
   for (let i = 0; i < cells.length; i++) {
@@ -82,5 +82,5 @@ export function spawnTerrain(totalCellCnt) {
 export function gameInit() {
   let t = spawnTerrain(GRID_SIZE);
   t = spawnTroops(t);
-  GameState.set({ cells: t });
+  GameCells.set(t);
 }

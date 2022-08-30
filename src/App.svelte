@@ -3,10 +3,10 @@
   import CommandMyTroop from "./CommandMyTroop.svelte";
   import { GRID_DIM } from "./GameConfig";
   import { canCommand, moveTroop } from "./useCase/ExecuteCommands";
-  import {GameCells, GameState} from "./domain/GameState";
+  import { GameCells } from "./domain/GameState";
   import { onMount } from "svelte";
   import { gameInit } from "./domain/GameInit";
-  import {get} from "svelte/store";
+  import { get } from "svelte/store";
 
   let shouldShowDirection = false;
 
@@ -40,7 +40,7 @@
 <main>
   <h1>Hello, Kingz</h1>
   <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
-    {#each $GameState as data, index}
+    {#each $GameCells as data, index}
       <Cell on:cellClicked={() => actionOnCell(index)} {data} />
     {/each}
   </div>

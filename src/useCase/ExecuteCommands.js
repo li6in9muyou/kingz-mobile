@@ -1,5 +1,5 @@
 import { GRID_DIM } from "../GameConfig";
-import { GameState } from "../domain/GameState";
+import { GameCells } from "../domain/GameState";
 import { get } from "svelte/store";
 import { Troop } from "../domain/Troop";
 
@@ -48,8 +48,7 @@ export function canCommand(cell) {
 }
 
 export function moveTroop(which, how) {
-  const s = get(GameState);
-  const g = s.cells;
+  const g = get(GameCells);
 
   const { direction, count } = how;
   console.log(`move troop command: no.${which} ${direction} ${count}`);
@@ -101,7 +100,7 @@ export function moveTroop(which, how) {
     }
   }
   move(from, to, count);
-  console.log("after move", s);
+  console.log("after move", g);
 
-  GameState.set(s);
+  GameCells.set(g);
 }
