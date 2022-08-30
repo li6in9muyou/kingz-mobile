@@ -10,17 +10,16 @@
   let shouldShowDirection = false;
 
   let which = -1;
-  let subject;
 
-  function cellClicked(i) {
+  function actionOnCell(i) {
     which = i;
-    subject = $GameState[i];
-    shouldShowDirection = canCommand(subject);
+    shouldShowDirection = canCommand($GameState[which]);
   }
 
   function submitCommand(ev) {
     shouldShowDirection = false;
     moveTroop(which, ev.detail);
+    which = -1;
   }
 
   onMount(() => {
@@ -32,7 +31,7 @@
   <CommandMyTroop
     on:submitCommand={submitCommand}
     on:cancel={() => (shouldShowDirection = false)}
-    troop={subject}
+    troop={$GameState[which]}
   />
 {/if}
 
@@ -40,7 +39,7 @@
   <h1>Hello, Kingz</h1>
   <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
     {#each $GameState as data, index}
-      <Cell on:cellClicked={() => cellClicked(index)} {data} />
+      <Cell on:cellClicked={() => actionOnCell(index)} {data} />
     {/each}
   </div>
 </main>
