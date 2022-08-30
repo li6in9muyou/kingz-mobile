@@ -12,7 +12,7 @@ export function spawnTroops(totalCellCnt) {
       const currentMirror = (gridDim - 1 - r) * gridDim + gridDim - 1 - c;
 
       if (current === currentMirror) {
-        blank[current] = Troop.buildNeutrual(0);
+        blank[current] = Troop.buildNeutral(0);
       } else {
         blank[current] = isMine
           ? Troop.buildMine(count)

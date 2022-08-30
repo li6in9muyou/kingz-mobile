@@ -10,9 +10,9 @@
 </script>
 
 <button
-  class:my-troop={data.troopOwner === "blue"}
-  class:none-troop={data.troopOwner === "none"}
-  class:opposing-troop={data.troopOwner === "red"}
+  class:my-troop={data.isMine}
+  class:none-troop={data.isNeutral}
+  class:opposing-troop={data.isEnemy}
   on:click={handleClick}>{data.troopCount}</button
 >
 

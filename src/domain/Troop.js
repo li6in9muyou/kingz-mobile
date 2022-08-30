@@ -2,27 +2,32 @@ export class Troop {
   troopCount;
   troopOwner;
 
-  static buildNeutrual(n) {
-    return { troopCount: n, troopOwner: "neu" };
+  constructor(troopCount, troopOwner) {
+    this.troopCount = troopCount;
+    this.troopOwner = troopOwner;
   }
 
-  static buildEnemy(n) {
-    return { troopCount: n, troopOwner: "red" };
-  }
-
-  static buildMine(n) {
-    return { troopCount: n, troopOwner: "blue" };
-  }
-
-  isMine() {
+  get isMine() {
     return this.troopOwner === "red";
   }
 
-  isEnemy() {
+  get isEnemy() {
     return this.troopOwner === "blue";
   }
 
-  isNeutral() {
+  get isNeutral() {
     return this.troopOwner === "neu";
+  }
+
+  static buildNeutral(n) {
+    return new Troop(n, "neu");
+  }
+
+  static buildEnemy(n) {
+    return new Troop(n, "red");
+  }
+
+  static buildMine(n) {
+    return new Troop(n, "blue");
   }
 }
