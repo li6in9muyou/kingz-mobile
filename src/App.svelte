@@ -53,12 +53,14 @@
     grid-template-columns: repeat(var(--GRID_DIM), 1fr);
     gap: 3px;
     width: 100%;
+    justify-items: center;
   }
 
   main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 0;
+    width:100%;
+    padding: 0 10px;
   }
 </style>

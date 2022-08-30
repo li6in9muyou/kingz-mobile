@@ -35,7 +35,6 @@
   .cell {
     color: black;
     font-size: 1rem;
-    height: 100%;
     width: 100%;
     aspect-ratio: 1;
     display: flex;
