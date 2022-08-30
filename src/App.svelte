@@ -47,7 +47,8 @@
     #Grid {
         display: grid;
         grid-template-columns: repeat(var(--GRID_DIM), 1fr);
-        gap: 8px;
+        gap: 3px;
         width: 300px;
+        aspect-ratio: 1;
     }
 </style>

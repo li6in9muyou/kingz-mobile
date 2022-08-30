@@ -1,4 +1,5 @@
 <button class:my-troop={data.troopOwner==='blue'}
+        class:none-troop={data.troopOwner==='none'}
         class:opposing-troop={data.troopOwner==='red'}
         on:click={handleClick}
 >{ data.troopCount }</button>
@@ -17,12 +18,10 @@
 <!-- Include styles -->
 <style>
     button {
-        background-color: lightgray;
         color: black;
         font-size: 1rem;
         height: 100%;
         width: 100%;
-        aspect-ratio: 1;
     }
 
     .my-troop {
@@ -31,5 +30,9 @@
 
     .opposing-troop {
         background-color: lightpink;
+    }
+
+    .none-troop {
+        background-color: lightgray;
     }
 </style>
