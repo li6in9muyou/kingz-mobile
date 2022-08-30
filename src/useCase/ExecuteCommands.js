@@ -3,10 +3,15 @@ import { GameState } from "../domain/GameState";
 import { get } from "svelte/store";
 import { battle } from "../domain/Battle";
 
+export function canCommand(subject) {
+  return subject.isMine;
+}
+
 export function moveTroop(which, how) {
   const g = get(GameState);
 
-  const { direction } = how;
+  const { direction, count } = how;
+  console.log(`move troop command: no.${which} ${direction} ${count}`);
 
   switch (direction) {
     case "up": {
@@ -18,12 +23,10 @@ export function moveTroop(which, how) {
       const from = g[from_x * GRID_DIM + from_y];
       const to = g[to_x * GRID_DIM + to_y];
 
-      const count = from.troopCount - 1;
       battle(from, to, count);
       break;
     }
     default: {
-      console.log("move troop", which, how);
       break;
     }
   }

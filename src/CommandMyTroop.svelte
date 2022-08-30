@@ -1,26 +1,40 @@
 <!-- Default data -->
 <script>
+  import { Troop } from "./domain/Troop";
   import { createEventDispatcher } from "svelte";
+
+  export let troop = Troop.buildNeutral(0);
 
   const dispatch = createEventDispatcher();
 
-  function handleClick(dir) {
-    dispatch("directionChosen", { direction: dir });
+  function submit(dir) {
+    dispatch("submitCommand", { direction: dir, count: moveCount });
   }
+
+  let moveCount = troop.troopCount - 1;
 </script>
 
 <main>
-  <button on:click={() => handleClick("up")}> up</button>
+  <div id="cancelBtn" on:click={() => dispatch("cancel")}>cancel</div>
+  <button on:click={() => submit("up")}> up</button>
 
   <div class="row">
-    <button on:click={() => handleClick("left")}> left</button>
-    <button on:click={() => handleClick("right")}> right</button>
+    <button on:click={() => submit("left")}> left</button>
+    <button on:click={() => submit("right")}> right</button>
   </div>
 
-  <button on:click={() => handleClick("down")}> down</button>
+  <button on:click={() => submit("down")}> down</button>
+
   <div id="troopCountContainer">
-    <span>12/15</span>
-    <input class="slider" id="troopCount" max="30" min="5" type="range" value="29">
+    <span>{moveCount}/{troop.troopCount - 1}</span>
+    <input
+      bind:value={moveCount}
+      class="slider"
+      id="troopCount"
+      max={troop.troopCount - 1}
+      min="1"
+      type="range"
+    />
   </div>
 </main>
 
@@ -68,7 +82,7 @@
     max-height: var(--height);
     background: lightgoldenrodyellow;
     outline: none;
-    border-radius: .3rem;
+    border-radius: 0.3rem;
   }
 
   .slider::-webkit-slider-thumb {
@@ -91,8 +105,18 @@
     display: flex;
     align-items: center;
     font-size: 2rem;
-    gap:30px;
+    gap: 30px;
     color: lightgoldenrodyellow;
     padding: 10px 0;
+  }
+
+  #cancelBtn {
+    background-color: yellow;
+    color: red;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 0.3rem 5rem;
+    margin: 2rem 0;
   }
 </style>
