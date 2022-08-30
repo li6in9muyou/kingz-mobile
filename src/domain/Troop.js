@@ -8,11 +8,11 @@ export class Troop {
   }
 
   get isMine() {
-    return this.troopOwner === "red";
+    return this.troopOwner === "blue";
   }
 
   get isEnemy() {
-    return this.troopOwner === "blue";
+    return this.troopOwner === "red";
   }
 
   get isNeutral() {
