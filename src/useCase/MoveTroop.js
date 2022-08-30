@@ -44,7 +44,7 @@ export function move(f, t, count) {
 }
 
 export function canCommand(cell) {
-  return cell.troop && cell.troop.isMine;
+  return cell.troop?.isMine && cell.troop.troopCount > 1;
 }
 
 export function moveTroop(which, how) {

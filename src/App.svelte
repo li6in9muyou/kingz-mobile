@@ -2,7 +2,7 @@
   import Cell from "./Cell.svelte";
   import CommandMyTroop from "./CommandMyTroop.svelte";
   import { GRID_DIM } from "./GameConfig";
-  import { canCommand, moveTroop } from "./useCase/ExecuteCommands";
+  import { canCommand, moveTroop } from "./useCase/MoveTroop";
   import { GameCells } from "./domain/GameState";
   import { onMount } from "svelte";
   import { gameInit } from "./domain/GameInit";
