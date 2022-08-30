@@ -9,20 +9,27 @@
   }
 </script>
 
-<button
+<div
+  class="cell"
   class:my-troop={data.isMine}
   class:none-troop={data.isNeutral}
   class:opposing-troop={data.isEnemy}
-  on:click={handleClick}>{data.troopCount}</button
+  on:click={handleClick}
 >
+  {data.troopCount > 0 ? data.troopCount : ""}
+</div>
 
 <!-- Include styles -->
 <style>
-  button {
+  .cell {
     color: black;
     font-size: 1rem;
     height: 100%;
     width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .my-troop {
