@@ -1,32 +1,24 @@
-<main>
-    <button on:click={()=>handleClick('up')}>
-        up
-    </button>
-
-    <div class="row">
-        <button on:click={()=>handleClick('left')}>
-            left
-        </button>
-        <button on:click={()=>handleClick('right')}>
-            right
-        </button>
-    </div>
-
-    <button on:click={()=>handleClick('down')}>
-        down
-    </button>
-</main>
-
 <!-- Default data -->
 <script>
-    import {createEventDispatcher} from 'svelte';
+    import {createEventDispatcher} from "svelte";
 
     const dispatch = createEventDispatcher();
 
     function handleClick(dir) {
-        dispatch('directionChosen', {direction: dir});
+        dispatch("directionChosen", {direction: dir});
     }
 </script>
+
+<main>
+    <button on:click={() => handleClick("up")}> up</button>
+
+    <div class="row">
+        <button on:click={() => handleClick("left")}> left</button>
+        <button on:click={() => handleClick("right")}> right</button>
+    </div>
+
+    <button on:click={() => handleClick("down")}> down</button>
+</main>
 
 <!-- Include styles -->
 <style>
@@ -34,7 +26,7 @@
         min-width: fit-content;
         margin: 2rem 2rem;
         padding: 1rem;
-        border-radius: .5rem;
+        border-radius: 0.5rem;
     }
 
     main {

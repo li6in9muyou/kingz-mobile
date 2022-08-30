@@ -1,19 +1,20 @@
-<button class:my-troop={data.troopOwner==='blue'}
-        class:none-troop={data.troopOwner==='none'}
-        class:opposing-troop={data.troopOwner==='red'}
-        on:click={handleClick}
->{ data.troopCount }</button>
-
 <script>
     export let data;
-    import {createEventDispatcher} from 'svelte';
+    import {createEventDispatcher} from "svelte";
 
     const dispatch = createEventDispatcher();
 
     function handleClick() {
-        dispatch('cellClicked');
+        dispatch("cellClicked");
     }
 </script>
+
+<button
+        class:my-troop={data.troopOwner === "blue"}
+        class:none-troop={data.troopOwner === "none"}
+        class:opposing-troop={data.troopOwner === "red"}
+        on:click={handleClick}>{data.troopCount}</button
+>
 
 <!-- Include styles -->
 <style>
