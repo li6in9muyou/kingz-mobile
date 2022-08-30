@@ -1,11 +1,12 @@
 <script>
   import Cell from "./Cell.svelte";
   import CommandMyTroop from "./CommandMyTroop.svelte";
-  import { GRID_DIM, GRID_SIZE } from "./GameConfig";
+  import { GRID_DIM } from "./GameConfig";
   import { canCommand, moveTroop } from "./useCase/ExecuteCommands";
-  import { GameState } from "./domain/GameState";
+  import {GameCells, GameState} from "./domain/GameState";
   import { onMount } from "svelte";
-  import { spawnTroops } from "./domain/GameInit";
+  import { gameInit } from "./domain/GameInit";
+  import {get} from "svelte/store";
 
   let shouldShowDirection = false;
 
@@ -13,17 +14,18 @@
 
   function actionOnCell(i) {
     which = i;
-    shouldShowDirection = canCommand($GameState[which]);
+    shouldShowDirection = canCommand($GameCells[which]);
   }
 
   function submitCommand(ev) {
-    shouldShowDirection = false;
     moveTroop(which, ev.detail);
     which = -1;
+    shouldShowDirection = false;
   }
 
   onMount(() => {
-    GameState.set(spawnTroops(GRID_SIZE));
+    gameInit();
+    console.log('after init, cells', get(GameCells));
   });
 </script>
 
@@ -31,7 +33,7 @@
   <CommandMyTroop
     on:submitCommand={submitCommand}
     on:cancel={() => (shouldShowDirection = false)}
-    troop={$GameState[which]}
+    troop={$GameCells[which].troop}
   />
 {/if}
 

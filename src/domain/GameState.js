@@ -1,3 +1,5 @@
-import { writable } from "svelte/store";
+import { derived, writable } from "svelte/store";
 
-export const GameState = writable([]);
+export const GameState = writable({ cells: [] });
+
+export const GameCells = derived(GameState, (s) => s.cells);

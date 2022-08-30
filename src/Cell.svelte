@@ -1,25 +1,40 @@
 <script>
-  export let data;
+  import {Terrain} from "./domain/Terrain";
+
+  export let data=Terrain.buildPlain();
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
+
+  const { troop } = data;
+  const terrain = data;
 
   function handleClick() {
     dispatch("cellClicked");
   }
 </script>
 
-<div
-  class="cell"
-  class:my-troop={data.isMine}
-  class:none-troop={data.isNeutral}
-  class:opposing-troop={data.isEnemy}
-  on:click={handleClick}
->
-  {data.troopCount > 0 ? data.troopCount : ""}
-</div>
+{#if troop}
+  <div
+    class="cell"
+    class:my-troop={troop.isMine}
+    class:neutral-troop={troop.isNeutral}
+    class:opposing-troop={troop.isEnemy}
+    class:fortress={terrain.isFortress}
+    on:click={handleClick}
+  >
+    {troop.troopCount > 0 ? troop.troopCount : ""}
+  </div>
+{:else}
+  <div
+    class="cell"
+    class:plain={terrain.isPlain}
+    class:mountain={terrain.isMountain}
+    class:home-base={terrain.isHome || terrain.isEnemyHome}
+    on:click={handleClick}
+  ></div>
+{/if}
 
-<!-- Include styles -->
 <style>
   .cell {
     color: black;
@@ -30,6 +45,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: whitesmoke;
+    border: dashed 1px darkgray;
   }
 
   .my-troop {
@@ -40,7 +57,17 @@
     background-color: lightpink;
   }
 
-  .none-troop {
+  .neutral-troop {
     background-color: lightgray;
+  }
+
+  .fortress {
+    --thickness: 4px;
+    outline: solid var(--thickness) darkolivegreen;
+    outline-offset: calc(-1*var(--thickness));
+  }
+
+  .mountain {
+    background-color: saddlebrown;
   }
 </style>
