@@ -47,13 +47,13 @@
     display: grid;
     grid-template-columns: repeat(var(--GRID_DIM), 1fr);
     gap: 3px;
-    width: 300px;
-    aspect-ratio: 1;
+    width: 100%;
   }
 
   main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px 0;
   }
 </style>
