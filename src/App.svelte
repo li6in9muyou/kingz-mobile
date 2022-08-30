@@ -25,7 +25,7 @@
 
   onMount(() => {
     gameInit();
-    console.log('after init, cells', get(GameCells));
+    console.log("after init, cells", get(GameCells));
   });
 </script>
 
