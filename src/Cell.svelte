@@ -1,29 +1,25 @@
 <script>
   import { Terrain } from "./domain/Terrain";
-
-  export let data = Terrain.buildPlain();
   import { createEventDispatcher } from "svelte";
-
   const dispatch = createEventDispatcher();
 
-  const { troop } = data;
-  const terrain = data;
+  export let terrain = Terrain.buildPlain();
 
   function handleClick() {
     dispatch("cellClicked");
   }
 </script>
 
-{#if troop}
+{#if terrain.troop}
   <div
     class="cell"
-    class:my-troop={troop.isMine}
-    class:neutral-troop={troop.isNeutral}
-    class:opposing-troop={troop.isEnemy}
+    class:my-troop={terrain.troop.isMine}
+    class:neutral-troop={terrain.troop.isNeutral}
+    class:opposing-troop={terrain.troop.isEnemy}
     class:fortress={terrain.isFortress}
     on:click={handleClick}
   >
-    {troop.troopCount > 0 ? troop.troopCount : ""}
+    {terrain.troop.troopCount > 0 ? terrain.troop.troopCount : ""}
   </div>
 {:else}
   <div

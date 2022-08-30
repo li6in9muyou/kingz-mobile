@@ -40,8 +40,8 @@
 <main>
   <h1>Hello, Kingz</h1>
   <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
-    {#each $GameCells as data, index}
-      <Cell on:cellClicked={() => actionOnCell(index)} {data} />
+    {#each $GameCells as terrain, index}
+      <Cell on:cellClicked={() => actionOnCell(index)} {terrain} />
     {/each}
   </div>
 </main>
