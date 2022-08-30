@@ -1,14 +1,15 @@
-<h1>Hello, Kingz</h1>
-
 {#if shouldShowDirection}
     <Direction on:directionChosen={directionChosen}/>
 {/if}
 
-<div id="Grid" style="--GRID_DIM:{GRID_DIM}">
-    {#each $GameState as data,index}
-        <Cell on:cellClicked={()=>cellClicked(index)} {data}/>
-    {/each}
-</div>
+<main>
+    <h1>Hello, Kingz</h1>
+    <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
+        {#each $GameState as data,index}
+            <Cell on:cellClicked={()=>cellClicked(index)} {data}/>
+        {/each}
+    </div>
+</main>
 
 <script>
     import Cell from './Cell.svelte';
@@ -50,5 +51,11 @@
         gap: 3px;
         width: 300px;
         aspect-ratio: 1;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 </style>
