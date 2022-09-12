@@ -1,6 +1,5 @@
 <script lang="ts">
   import StartNewGame from "./svelteAdapter/StartNewGame.svelte";
-  import { PlayUseCase } from "./domain/UseCase";
   import { onMount } from "svelte";
   import PleaseWait from "./utility/PleaseWait.svelte";
   import { HttpClient } from "./port/Infrastructure";
@@ -14,7 +13,6 @@
   const pageMainGame = 42;
 
   let currentPage = pageStartNewGame;
-  let currentProps = null;
   let showSpinner = false;
 
   const PleaseWaitPage = {
@@ -32,17 +30,8 @@
   const KingzInitUseCase = new KingzInit(config);
 
   onMount(() => {
-    PlayUseCase.subscribe("GameStart", (context) => {
-      currentPage = pageMainGame;
-      currentProps = context;
-    });
-    PlayUseCase.subscribe("GameUpdate", (context) => {
-      currentPage = pageMainGame;
-      currentProps = context;
-    });
     HttpClient.subscribe("StartRequest", PleaseWaitPage.open);
     HttpClient.subscribe("DoneRequest", PleaseWaitPage.close);
-    PlayUseCase.boot();
   });
 </script>
 
