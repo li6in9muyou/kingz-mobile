@@ -1,12 +1,17 @@
-<script>
-  import Cell from "../Cell.svelte";
-  import CommandMyTroop from "../CommandMyTroop.svelte";
-  import { GRID_DIM } from "../GameConfig";
-  import { canCommand, moveTroop } from "../useCase/MoveTroop";
-  import { GameCells } from "../domain/GameState";
-  import { onMount } from "svelte";
-  import { gameInit } from "../domain/GameInit";
+<script lang="ts">
+  import Cell from "./Cell.svelte";
+  import CommandMyTroop from "./CommandMyTroop.svelte";
   import { get } from "svelte/store";
+  import { every, isNull, negate } from "lodash";
+  import KingzPlay from "../useCase/KingzPlay";
+  import KingzInit from "../useCase/KingzInit";
+  import { onMount } from "svelte";
+
+  export let GameCells = null;
+  export let PlayUseCase: KingzPlay = null;
+  export let InitUseCase: KingzInit = null;
+  console.assert(every([GameCells, PlayUseCase, InitUseCase], negate(isNull)));
+  const GRID_DIM = PlayUseCase.grid_dim;
 
   let shouldShowDirection = false;
 
@@ -14,17 +19,17 @@
 
   function actionOnCell(i) {
     which = i;
-    shouldShowDirection = canCommand($GameCells[which]);
+    shouldShowDirection = PlayUseCase.canCommand($GameCells[which]);
   }
 
   function submitCommand(ev) {
-    moveTroop(which, ev.detail);
+    PlayUseCase.move_troop(which, ev.detail);
     which = -1;
     shouldShowDirection = false;
   }
 
   onMount(() => {
-    gameInit();
+    PlayUseCase.start_with_these_cells(InitUseCase.gen_init_cells());
     console.log("after init, cells", get(GameCells));
   });
 </script>

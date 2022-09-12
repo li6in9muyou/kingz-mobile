@@ -2,6 +2,7 @@ import { GRID_DIM } from "../GameConfig";
 import { Troop } from "../domain/Troop";
 import type { IGameConfig } from "../port/IGameConfig";
 import type { IUserInterfacePort } from "../port/IUserInterfacePort";
+import type { Terrain } from "../domain/Terrain";
 
 function move(f, t, count) {
   console.log("move", f, t, count);
@@ -51,6 +52,18 @@ export default class KingzPlay {
   constructor(game_config_port: IGameConfig, ui_port: IUserInterfacePort) {
     this.grid_size = game_config_port.number_of_cells;
     this.ui_port = ui_port;
+  }
+
+  get grid_dim() {
+    return Math.floor(Math.sqrt(this.grid_size));
+  }
+
+  start_with_these_cells(cells: Terrain[]) {
+    this.ui_port.update_cells(cells);
+  }
+
+  canCommand(cell: Terrain) {
+    return cell.troop?.isMine && cell.troop.troopCount > 1;
   }
 
   move_troop(which: number, how: any) {
