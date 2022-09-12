@@ -1,7 +1,7 @@
 import { GameState } from "./GameState.js";
 import { Emitter } from "../utility/common";
 import { HttpClient } from "../port/Infrastructure.js";
-import "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js";
+import _ from "lodash";
 
 export const OnlineUseCase = new (class extends Emitter(Object) {
   constructor() {
