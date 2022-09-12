@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import StartNewGame from "./svelteAdapter/StartNewGame.svelte";
   import { PlayUseCase } from "./domain/UseCase";
   import { onMount } from "svelte";
