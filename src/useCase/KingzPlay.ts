@@ -1,5 +1,6 @@
 import { GRID_DIM } from "../GameConfig";
 import { Troop } from "../domain/Troop";
+import type { IGameConfig } from "../port/IGameConfig";
 
 function move(f, t, count) {
   console.log("move", f, t, count);
@@ -41,22 +42,22 @@ function move(f, t, count) {
   }
 }
 
-export default new (class {
+export default class KingzPlay {
   grid_size;
   game_cells = [];
   ui_port;
 
-  constructor(grid_size, ui_port) {
-    this.grid_size = grid_size;
+  constructor(game_config_port: IGameConfig, ui_port) {
+    this.grid_size = game_config_port.grid_size;
     this.ui_port = ui_port;
   }
 
-  move_troop(...args) {
-    this.#move_troop_impl(...args);
+  move_troop(which: number, how: any) {
+    this.move_troop_impl.apply(this, arguments);
     this.ui_port.update_cells([...this.game_cells]);
   }
 
-  #move_troop_impl(which, how) {
+  private move_troop_impl(which: number, how: any) {
     const g = this.game_cells;
     const { direction, count } = how;
     console.log(`move troop command: no.${which} ${direction} ${count}`);
@@ -109,4 +110,4 @@ export default new (class {
     }
     move(from, to, count);
   }
-})();
+}

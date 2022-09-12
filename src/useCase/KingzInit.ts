@@ -1,14 +1,15 @@
 import { spawnTerrain, spawnTroops } from "../domain/GameInit";
 import { flow } from "lodash";
+import type { IGameConfig } from "../port/IGameConfig";
 
-export default new (class {
+export default class {
   grid_size;
 
-  constructor(game_config_port) {
-    this.grid_size = game_config_port.get_config("grid_size");
+  constructor(game_config_port: IGameConfig) {
+    this.grid_size = game_config_port.grid_size;
   }
 
   gen_init_cells() {
     return flow([spawnTerrain, spawnTroops])(this.grid_size);
   }
-})();
+}
