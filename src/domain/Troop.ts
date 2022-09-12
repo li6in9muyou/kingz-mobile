@@ -1,6 +1,6 @@
 export class Troop {
-  troopCount;
-  troopOwner;
+  troopCount: number;
+  troopOwner: "blue" | "red" | "neu";
 
   constructor(troopCount, troopOwner) {
     this.troopCount = troopCount;

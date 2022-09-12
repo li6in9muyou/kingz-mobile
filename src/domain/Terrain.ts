@@ -4,8 +4,8 @@ import { Troop } from "./Troop";
 export const GameTerrain = writable([]);
 
 export class Terrain {
-  type;
-  troop;
+  type: "home" | "enemy_home" | "plain" | "fortress" | "mountain";
+  troop: Troop;
   occupied_since = 0;
 
   constructor(type, troop) {

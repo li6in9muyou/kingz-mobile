@@ -1,6 +1,7 @@
 import { GRID_DIM } from "../GameConfig";
 import { Troop } from "../domain/Troop";
 import type { IGameConfig } from "../port/IGameConfig";
+import type { IUserInterfacePort } from "../port/IUserInterfacePort";
 
 function move(f, t, count) {
   console.log("move", f, t, count);
@@ -47,7 +48,7 @@ export default class KingzPlay {
   game_cells = [];
   ui_port;
 
-  constructor(game_config_port: IGameConfig, ui_port) {
+  constructor(game_config_port: IGameConfig, ui_port: IUserInterfacePort) {
     this.grid_size = game_config_port.grid_size;
     this.ui_port = ui_port;
   }
