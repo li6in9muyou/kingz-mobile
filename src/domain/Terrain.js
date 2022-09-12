@@ -6,6 +6,7 @@ export const GameTerrain = writable([]);
 export class Terrain {
   type;
   troop;
+  occupied_since = 0;
 
   constructor(type, troop) {
     this.type = type;

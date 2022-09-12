@@ -1,66 +1,51 @@
 <script>
-  import Cell from "./Cell.svelte";
-  import CommandMyTroop from "./CommandMyTroop.svelte";
-  import { GRID_DIM } from "./GameConfig";
-  import { canCommand, moveTroop } from "./useCase/MoveTroop";
-  import { GameCells } from "./domain/GameState";
+  import StartNewGame from "./svelteAdapter/StartNewGame.svelte";
+  import { PlayUseCase } from "./domain/UseCase";
   import { onMount } from "svelte";
-  import { gameInit } from "./domain/GameInit";
-  import { get } from "svelte/store";
+  import PleaseWait from "./utility/PleaseWait.svelte";
+  import { HttpClient } from "./port/Infrastructure";
+  import MainGame from "./svelteAdapter/MainGame.svelte";
 
-  let shouldShowDirection = false;
+  const pageStartNewGame = 9;
+  const pageMainGame = 42;
 
-  let which = -1;
+  let currentPage = pageStartNewGame;
+  let currentProps = null;
+  let showSpinner = false;
 
-  function actionOnCell(i) {
-    which = i;
-    shouldShowDirection = canCommand($GameCells[which]);
-  }
-
-  function submitCommand(ev) {
-    moveTroop(which, ev.detail);
-    which = -1;
-    shouldShowDirection = false;
-  }
-
+  const PleaseWaitPage = {
+    open() {
+      showSpinner = true;
+    },
+    close() {
+      showSpinner = false;
+    },
+  };
   onMount(() => {
-    gameInit();
-    console.log("after init, cells", get(GameCells));
+    PlayUseCase.subscribe("GameStart", (context) => {
+      currentPage = pageMainGame;
+      currentProps = context;
+    });
+    PlayUseCase.subscribe("GameUpdate", (context) => {
+      currentPage = pageMainGame;
+      currentProps = context;
+    });
+    HttpClient.subscribe("StartRequest", PleaseWaitPage.open);
+    HttpClient.subscribe("DoneRequest", PleaseWaitPage.close);
   });
 </script>
 
-{#if shouldShowDirection}
-  <CommandMyTroop
-    on:submitCommand={submitCommand}
-    on:cancel={() => (shouldShowDirection = false)}
-    troop={$GameCells[which].troop}
-  />
+{#if currentPage === pageStartNewGame}
+  <StartNewGame />
 {/if}
 
-<main>
-  <h1>Hello, Kingz</h1>
-  <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
-    {#each $GameCells as terrain, index}
-      <Cell on:cellClicked={() => actionOnCell(index)} {terrain} />
-    {/each}
-  </div>
-</main>
+{#if currentPage === pageMainGame}
+  <MainGame {...currentProps} />
+{/if}
 
-<!-- Include styles -->
+{#if showSpinner}
+  <PleaseWait />
+{/if}
+
 <style>
-  #Grid {
-    display: grid;
-    grid-template-columns: repeat(var(--GRID_DIM), 1fr);
-    gap: 3px;
-    width: 100%;
-    justify-items: center;
-  }
-
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width:100%;
-    padding: 0 10px;
-  }
 </style>
