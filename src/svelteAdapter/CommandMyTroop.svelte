@@ -1,6 +1,6 @@
 <!-- Default data -->
 <script>
-  import { Troop } from "./domain/Troop";
+  import { Troop } from "../domain/Troop";
   import { createEventDispatcher } from "svelte";
 
   export let troop = Troop.buildNeutral(0);

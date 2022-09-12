@@ -1,5 +1,5 @@
 <script>
-  import { Terrain } from "./domain/Terrain";
+  import { Terrain } from "../domain/Terrain";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
