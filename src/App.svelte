@@ -46,6 +46,3 @@
 {#if showSpinner}
   <PleaseWait />
 {/if}
-
-<style>
-</style>
