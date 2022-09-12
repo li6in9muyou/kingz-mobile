@@ -29,7 +29,6 @@
   }
 
   onMount(() => {
-    PlayUseCase.start_with_these_cells(InitUseCase.gen_init_cells());
     console.log("after init, cells", get(GameCells));
   });
 </script>

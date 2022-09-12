@@ -4,6 +4,7 @@ import type { IGameConfig } from "../port/IGameConfig";
 import type { IUserInterfacePort } from "../port/IUserInterfacePort";
 import type { Terrain } from "../domain/Terrain";
 import type { IGameCellsPersistence } from "../port/IGameCellsPersistence";
+import KingzInit from "./KingzInit";
 
 function move(f, t, count) {
   console.log("move", f, t, count);
@@ -49,6 +50,7 @@ export default class KingzPlay {
   grid_size;
   ui_port;
   persistence_port: IGameCellsPersistence;
+  private init_use_case;
 
   constructor(
     game_config_port: IGameConfig,
@@ -58,6 +60,7 @@ export default class KingzPlay {
     this.persistence_port = persistence_port;
     this.grid_size = game_config_port.number_of_cells;
     this.ui_port = ui_port;
+    this.init_use_case = new KingzInit(game_config_port);
   }
 
   get game_cells() {
@@ -70,6 +73,10 @@ export default class KingzPlay {
 
   start_with_these_cells(cells: Terrain[]) {
     this.ui_port.update_cells(cells);
+  }
+
+  boot() {
+    this.start_with_these_cells(this.init_use_case.gen_init_cells());
   }
 
   canCommand(cell: Terrain) {

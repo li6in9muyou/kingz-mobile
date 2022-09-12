@@ -1,6 +1,6 @@
 import { GameState } from "./GameState.js";
 import { Emitter } from "../utility/common";
-import { HttpClient } from "../port/Infrastructure.js";
+import { HttpClient } from "../useCase/Infrastructure.js";
 import _ from "lodash";
 
 export const OnlineUseCase = new (class extends Emitter(Object) {
