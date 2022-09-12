@@ -5,6 +5,10 @@
   import PleaseWait from "./utility/PleaseWait.svelte";
   import { HttpClient } from "./port/Infrastructure";
   import MainGame from "./svelteAdapter/MainGame.svelte";
+  import KingzPlay from "./useCase/KingzPlay";
+  import LiteralGameConfig from "./port/LiteralGameConfig/LiteralGameConfig";
+  import SveltePort from "./port/SveltePort/SveltePort";
+  import KingzInit from "./useCase/KingzInit";
 
   const pageStartNewGame = 9;
   const pageMainGame = 42;
@@ -21,6 +25,12 @@
       showSpinner = false;
     },
   };
+
+  const stores = new SveltePort();
+  const config = new LiteralGameConfig();
+  const KingzPlayUseCase = new KingzPlay(config, stores);
+  const KingzInitUseCase = new KingzInit(config);
+
   onMount(() => {
     PlayUseCase.subscribe("GameStart", (context) => {
       currentPage = pageMainGame;
@@ -32,6 +42,7 @@
     });
     HttpClient.subscribe("StartRequest", PleaseWaitPage.open);
     HttpClient.subscribe("DoneRequest", PleaseWaitPage.close);
+    PlayUseCase.boot();
   });
 </script>
 
@@ -40,7 +51,11 @@
 {/if}
 
 {#if currentPage === pageMainGame}
-  <MainGame {...currentProps} />
+  <MainGame
+    PlayUseCase={KingzPlayUseCase}
+    InitUseCase={KingzInitUseCase}
+    GameCells={stores.GameCells}
+  />
 {/if}
 
 {#if showSpinner}
