@@ -1,7 +1,5 @@
 import { Troop } from "./Troop";
 import { Terrain } from "./Terrain";
-import { GRID_DIM, GRID_SIZE } from "../GameConfig";
-import { GameCells } from "./GameState";
 
 export function spawnTroops(cells) {
   for (let i = 0; i < cells.length; i++) {
@@ -39,8 +37,8 @@ export function spawnTerrain(totalCellCnt) {
   for (let i = 0; i < HOME_BASE_CNT; i++) {
     let current, currentMirror;
     do {
-      const r = Math.floor(GRID_DIM * Math.random());
-      const c = Math.floor(GRID_DIM * Math.random());
+      const r = Math.floor(gridDim * Math.random());
+      const c = Math.floor(gridDim * Math.random());
       current = r * gridDim + c;
       currentMirror = (gridDim - 1 - r) * gridDim + gridDim - 1 - c;
     } while (current === currentMirror || !blank[current].isPlain);
@@ -52,8 +50,8 @@ export function spawnTerrain(totalCellCnt) {
   for (let i = 0; i < FORTRESS_CNT; i++) {
     let current, currentMirror;
     do {
-      const r = Math.floor(GRID_DIM * Math.random());
-      const c = Math.floor(GRID_DIM * Math.random());
+      const r = Math.floor(gridDim * Math.random());
+      const c = Math.floor(gridDim * Math.random());
       current = r * gridDim + c;
       currentMirror = (gridDim - 1 - r) * gridDim + gridDim - 1 - c;
     } while (current === currentMirror || !blank[current].isPlain);
@@ -66,8 +64,8 @@ export function spawnTerrain(totalCellCnt) {
   for (let i = 0; i < MOUNTAIN_CNT; i++) {
     let current, currentMirror;
     do {
-      const r = Math.floor(GRID_DIM * Math.random());
-      const c = Math.floor(GRID_DIM * Math.random());
+      const r = Math.floor(gridDim * Math.random());
+      const c = Math.floor(gridDim * Math.random());
       current = r * gridDim + c;
       currentMirror = (gridDim - 1 - r) * gridDim + gridDim - 1 - c;
     } while (current === currentMirror || !blank[current].isPlain);
@@ -77,10 +75,4 @@ export function spawnTerrain(totalCellCnt) {
   }
 
   return blank;
-}
-
-export function gameInit() {
-  let t = spawnTerrain(GRID_SIZE);
-  t = spawnTroops(t);
-  GameCells.set(t);
 }
