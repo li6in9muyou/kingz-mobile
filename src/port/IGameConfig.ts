@@ -1,3 +1,3 @@
 export interface IGameConfig {
-  readonly grid_size: number;
+  readonly number_of_cells: number;
 }

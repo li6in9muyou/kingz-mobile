@@ -49,7 +49,7 @@ export default class KingzPlay {
   ui_port;
 
   constructor(game_config_port: IGameConfig, ui_port: IUserInterfacePort) {
-    this.grid_size = game_config_port.grid_size;
+    this.grid_size = game_config_port.number_of_cells;
     this.ui_port = ui_port;
   }
 
