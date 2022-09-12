@@ -3,8 +3,8 @@
   import CommandMyTroop from "./CommandMyTroop.svelte";
   import { get } from "svelte/store";
   import { every, isNull, negate } from "lodash";
-  import KingzPlay from "../useCase/KingzPlay";
-  import KingzInit from "../useCase/KingzInit";
+  import type { default as KingzPlay } from "../useCase/KingzPlay";
+  import type { default as KingzInit } from "../useCase/KingzInit";
   import { onMount } from "svelte";
 
   export let GameCells = null;
