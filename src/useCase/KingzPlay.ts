@@ -3,6 +3,7 @@ import { Troop } from "../domain/Troop";
 import type { IGameConfig } from "../port/IGameConfig";
 import type { IUserInterfacePort } from "../port/IUserInterfacePort";
 import type { Terrain } from "../domain/Terrain";
+import type { IGameCellsPersistence } from "../port/IGameCellsPersistence";
 
 function move(f, t, count) {
   console.log("move", f, t, count);
@@ -46,12 +47,21 @@ function move(f, t, count) {
 
 export default class KingzPlay {
   grid_size;
-  game_cells = [];
   ui_port;
+  persistence_port: IGameCellsPersistence;
 
-  constructor(game_config_port: IGameConfig, ui_port: IUserInterfacePort) {
+  constructor(
+    game_config_port: IGameConfig,
+    ui_port: IUserInterfacePort,
+    persistence_port: IGameCellsPersistence
+  ) {
+    this.persistence_port = persistence_port;
     this.grid_size = game_config_port.number_of_cells;
     this.ui_port = ui_port;
+  }
+
+  get game_cells() {
+    return this.persistence_port.get_current_game_cells();
   }
 
   get grid_dim() {

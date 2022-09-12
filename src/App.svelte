@@ -28,7 +28,7 @@
 
   const stores = new SveltePort();
   const config = new LiteralGameConfig();
-  const KingzPlayUseCase = new KingzPlay(config, stores);
+  const KingzPlayUseCase = new KingzPlay(config, stores, stores);
   const KingzInitUseCase = new KingzInit(config);
 
   onMount(() => {
