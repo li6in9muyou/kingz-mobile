@@ -41,11 +41,11 @@ export class Terrain {
     return new Terrain("mountain", null);
   }
 
-  static buildHomeBase(n = 10) {
+  static buildHomeBase(n = 1) {
     return new Terrain("home", Troop.buildMine(n));
   }
 
-  static buildEnemyHomeBase(n = 10) {
+  static buildEnemyHomeBase(n = 1) {
     return new Terrain("enemy_home", Troop.buildEnemy(n));
   }
 
