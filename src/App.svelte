@@ -9,11 +9,8 @@
   import SveltePort from "./port/SveltePort/SveltePort";
   import KingzInit from "./useCase/KingzInit";
   import OnlineRegister from "./useCase/OnlineRegister";
+  import { get } from "svelte/store";
 
-  const pageStartNewGame = 9;
-  const pageMainGame = 42;
-
-  let currentPage = pageStartNewGame;
   let showSpinner = false;
 
   const PleaseWaitPage = {
@@ -37,11 +34,11 @@
   });
 </script>
 
-{#if currentPage === pageStartNewGame}
+{#if get(stores.OnStartNewGamePage)}
   <StartNewGame use_case={OnlineUseCase} />
 {/if}
 
-{#if currentPage === pageMainGame}
+{#if get(stores.OnMainGamePage)}
   <MainGame
     PlayUseCase={KingzPlayUseCase}
     InitUseCase={KingzInitUseCase}

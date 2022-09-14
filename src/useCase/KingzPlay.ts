@@ -77,6 +77,7 @@ export default class KingzPlay {
 
   boot() {
     this.start_with_these_cells(this.init_use_case.gen_init_cells());
+    this.ui_port.init();
   }
 
   canCommand(cell: Terrain) {
