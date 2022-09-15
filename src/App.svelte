@@ -4,12 +4,11 @@
   import PleaseWait from "./utility/PleaseWait.svelte";
   import { HttpClient } from "./useCase/Infrastructure";
   import MainGame from "./svelteAdapter/MainGame.svelte";
-  import KingzPlay from "./useCase/KingzPlay";
-  import LiteralGameConfig from "./port/LiteralGameConfig/LiteralGameConfig";
   import SveltePort from "./port/SveltePort/SveltePort";
-  import KingzInit from "./useCase/KingzInit";
-  import OnlineRegister from "./useCase/OnlineRegister";
-  import { get } from "svelte/store";
+  import GameLifeCycle from "./useCase/GameLifeCycle";
+  import KingzInitUseCase from "./useCase/KingzInit";
+  import PlayGame from "./useCase/PlayGame";
+  import Welcome from "./svelteAdapter/Welcome.svelte";
 
   let showSpinner = false;
 
@@ -23,24 +22,28 @@
   };
 
   const stores = new SveltePort();
-  const config = new LiteralGameConfig();
-  const KingzPlayUseCase = new KingzPlay(config, stores, stores);
-  const OnlineUseCase = new OnlineRegister(KingzPlayUseCase);
-  const KingzInitUseCase = new KingzInit(config);
+  const gameLifeCycle = new GameLifeCycle(stores);
+  let localPlayer, KingzPlayUseCase;
+  let isOnWelcomePage = stores.OnWelcomePage;
+  let isOnMainGamePage = stores.OnMainGamePage;
+  let currentPage = stores.CurrentPage;
 
   onMount(() => {
+    gameLifeCycle.on_boot(stores);
+    localPlayer = gameLifeCycle.localPlayer;
+    KingzPlayUseCase = new PlayGame(gameLifeCycle.game);
     HttpClient.subscribe("StartRequest", PleaseWaitPage.open);
     HttpClient.subscribe("DoneRequest", PleaseWaitPage.close);
   });
 </script>
 
-{#if get(stores.OnStartNewGamePage)}
-  <StartNewGame use_case={OnlineUseCase} />
+{#if $currentPage === 9}
+  <StartNewGame use_case={localPlayer} />
 {/if}
 
-{#if get(stores.OnMainGamePage)}
+{#if $isOnMainGamePage}
   <MainGame
-    PlayUseCase={KingzPlayUseCase}
+    PlayUseCase={KingzPlayUseCase.get_deprecated_kingz_play_adapter()}
     InitUseCase={KingzInitUseCase}
     GameCells={stores.GameCells}
   />
@@ -48,4 +51,8 @@
 
 {#if showSpinner}
   <PleaseWait />
+{/if}
+
+{#if $isOnWelcomePage}
+  <Welcome />
 {/if}

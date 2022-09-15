@@ -1,14 +1,14 @@
 <script lang="ts">
   import Cell from "./Cell.svelte";
   import CommandMyTroop from "./CommandMyTroop.svelte";
-  import { get } from "svelte/store";
   import { every, isNull, negate } from "lodash";
-  import type { default as KingzPlay } from "../useCase/KingzPlay";
   import type { default as KingzInit } from "../useCase/KingzInit";
-  import { onMount } from "svelte";
+  import type DeprecatedKingzPlayAdapter from "../useCase/DeprecatedKingzPlayAdapter";
+  import debug from "debug";
+  const print = debug("MainGame.svelte");
 
   export let GameCells = null;
-  export let PlayUseCase: KingzPlay = null;
+  export let PlayUseCase: DeprecatedKingzPlayAdapter = null;
   export let InitUseCase: KingzInit = null;
   console.assert(every([GameCells, PlayUseCase, InitUseCase], negate(isNull)));
   const GRID_DIM = PlayUseCase.grid_dim;
@@ -27,10 +27,6 @@
     which = -1;
     shouldShowDirection = false;
   }
-
-  onMount(() => {
-    console.log("after init, cells", get(GameCells));
-  });
 </script>
 
 {#if shouldShowDirection}
