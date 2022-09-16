@@ -2,6 +2,8 @@ import type { KingzGameState } from "../domain/KingzGame";
 import type IUpdateView from "../port/IUpdateView";
 import type IPromptNickName from "../port/IPromptNickName";
 import debug from "debug";
+import type GameLifeCycle from "./GameLifeCycle";
+import { HttpClient } from "./Infrastructure";
 
 const print = debug("LocalPlayer");
 
@@ -11,7 +13,10 @@ export default class LocalPlayer {
   private ui: IUpdateView & IPromptNickName;
   private CurrentUser: string;
 
-  constructor(ui: IUpdateView & IPromptNickName) {
+  constructor(
+    ui: IUpdateView & IPromptNickName,
+    private readonly game: GameLifeCycle
+  ) {
     this.ui = ui;
     this.ui.prompt_nick_name();
   }
@@ -19,6 +24,9 @@ export default class LocalPlayer {
   on_register(nickname: string) {
     this.CurrentUser = nickname;
     print(`on_register, nickname ${nickname}`);
+    HttpClient.do_fetch(700, { nickname }).then(() => {
+      this.game.on_game_start();
+    });
   }
 
   on_log_out() {

@@ -29,10 +29,9 @@ export default class GameLifeCycle {
       executed_moves: [],
     });
     // create local player
-    this.localPlayer = new LocalPlayer(ui);
+    this.localPlayer = new LocalPlayer(ui, this);
     // create remote player
     this.remotePlayer = new RemotePlayer();
-    this.on_game_start();
   }
 
   on_game_ended() {
