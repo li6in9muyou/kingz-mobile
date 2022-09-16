@@ -28,10 +28,13 @@
   let isOnMainGamePage = stores.OnMainGamePage;
   let currentPage = stores.CurrentPage;
 
-  onMount(() => {
+  function enter_game() {
     gameLifeCycle.on_boot(stores);
     localPlayer = gameLifeCycle.localPlayer;
     KingzPlayUseCase = new PlayGame(gameLifeCycle.game);
+  }
+
+  onMount(() => {
     HttpClient.subscribe("StartRequest", PleaseWaitPage.open);
     HttpClient.subscribe("DoneRequest", PleaseWaitPage.close);
   });
@@ -54,5 +57,5 @@
 {/if}
 
 {#if $isOnWelcomePage}
-  <Welcome />
+  <Welcome on:enterGame={enter_game} />
 {/if}
