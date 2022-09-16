@@ -29,6 +29,7 @@ export default class SveltePort
   );
   OnMainGamePage = derived(this.CurrentPage, (cp) => cp === pageMainGame);
   OnWelcomePage = derived(this.CurrentPage, (cp) => cp === pageWelcome);
+  OnGameOverPage = derived(this.CurrentPage, (cp) => cp === pageEndGame);
 
   get_current_game_cells(): Terrain[] {
     return [...get(this.GameCells)];
@@ -39,7 +40,7 @@ export default class SveltePort
   }
 
   init() {
-    this.CurrentPage.set(pageMainGame);
+    this.CurrentPage.set(pageWelcome);
   }
 
   prompt_nick_name() {

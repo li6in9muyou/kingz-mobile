@@ -9,6 +9,7 @@
   import KingzInitUseCase from "./useCase/KingzInit";
   import PlayGame from "./useCase/PlayGame";
   import Welcome from "./svelteAdapter/Welcome.svelte";
+  import GameOver from "./svelteAdapter/GameOver.svelte";
 
   let showSpinner = false;
 
@@ -26,6 +27,7 @@
   let localPlayer, KingzPlayUseCase;
   let isOnWelcomePage = stores.OnWelcomePage;
   let isOnMainGamePage = stores.OnMainGamePage;
+  let isOnGameOverPage = stores.OnGameOverPage;
   let currentPage = stores.CurrentPage;
 
   function enter_game() {
@@ -35,6 +37,7 @@
   }
 
   onMount(() => {
+    stores.init();
     HttpClient.subscribe("StartRequest", PleaseWaitPage.open);
     HttpClient.subscribe("DoneRequest", PleaseWaitPage.close);
   });
@@ -58,4 +61,12 @@
 
 {#if $isOnWelcomePage}
   <Welcome on:enterGame={enter_game} />
+{/if}
+
+{#if $isOnGameOverPage}
+  <GameOver
+    on:backToWelcomePage={() => {
+      stores.init();
+    }}
+  />
 {/if}
