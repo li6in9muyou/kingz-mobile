@@ -2,14 +2,16 @@
   import Cell from "./Cell.svelte";
   import CommandMyTroop from "./CommandMyTroop.svelte";
   import { every, isNull, negate } from "lodash";
-  import type { default as KingzInit } from "../useCase/KingzInit";
+  import { default as KingzInit } from "../useCase/KingzInit";
   import type DeprecatedKingzPlayAdapter from "../useCase/DeprecatedKingzPlayAdapter";
   import debug from "debug";
+  import GameLifeCycle from "../useCase/GameLifeCycle";
   const print = debug("MainGame.svelte");
 
   export let GameCells = null;
   export let PlayUseCase: DeprecatedKingzPlayAdapter = null;
   export let InitUseCase: KingzInit = null;
+  export let gameLifeCycle: GameLifeCycle = null;
   console.assert(every([GameCells, PlayUseCase, InitUseCase], negate(isNull)));
   const GRID_DIM = PlayUseCase.grid_dim;
 
@@ -39,6 +41,10 @@
 
 <main>
   <h1>Hello, Kingz</h1>
+  <h2>
+    <button on:click={() => gameLifeCycle.on_local_quit()}>quit</button>
+    <button>save and quit</button>
+  </h2>
   <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
     {#each $GameCells as terrain, index}
       <Cell on:cellClicked={() => actionOnCell(index)} {terrain} />

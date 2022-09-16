@@ -44,4 +44,13 @@ export default class GameLifeCycle {
     print(`game started %O`, this.game);
     this.ui.start_game(this.game.game_state);
   }
+
+  on_local_quit() {
+    print("local player wish to quit");
+    this.on_game_ended();
+  }
+
+  on_local_save_game() {
+    print("local player wish to save current game");
+  }
 }

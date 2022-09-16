@@ -49,6 +49,7 @@
 
 {#if $isOnMainGamePage}
   <MainGame
+    {gameLifeCycle}
     PlayUseCase={KingzPlayUseCase.get_deprecated_kingz_play_adapter()}
     InitUseCase={KingzInitUseCase}
     GameCells={stores.GameCells}
