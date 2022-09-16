@@ -33,7 +33,7 @@
   function enter_game() {
     gameLifeCycle.on_boot(stores);
     localPlayer = gameLifeCycle.localPlayer;
-    KingzPlayUseCase = new PlayGame(gameLifeCycle.game);
+    KingzPlayUseCase = new PlayGame(gameLifeCycle.game, gameLifeCycle);
   }
 
   onMount(() => {

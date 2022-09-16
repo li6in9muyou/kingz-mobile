@@ -3,13 +3,14 @@ import type KingzGame from "../domain/KingzGame";
 import type DeprecatedKingzPlayAdapter from "./DeprecatedKingzPlayAdapter";
 import type { Terrain } from "../domain/Terrain";
 import debug from "debug";
+import type GameLifeCycle from "./GameLifeCycle";
 
 const print = debug("PlayGame");
 
 export default class PlayGame {
   private readonly game: KingzGame;
 
-  constructor(game: KingzGame) {
+  constructor(game: KingzGame, private readonly gameLifeCycle: GameLifeCycle) {
     this.game = game;
   }
 
@@ -20,6 +21,9 @@ export default class PlayGame {
   on_submit_command(move: KingzPlayerMove) {
     this.game.execute_move(move);
     print("player submit %o", move);
+    if (!this.game.can_continue()) {
+      this.gameLifeCycle.on_game_ended();
+    }
   }
 
   get_deprecated_kingz_play_adapter(): DeprecatedKingzPlayAdapter {
