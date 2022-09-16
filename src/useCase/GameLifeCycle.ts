@@ -20,7 +20,7 @@ export default class GameLifeCycle {
     this.ui = ui;
   }
 
-  on_boot(ui: IUpdateView & IPromptNickName & IStartGame) {
+  async on_boot(ui: IUpdateView & IPromptNickName & IStartGame) {
     // create game
     this.game = new KingzGame(ui);
     this.game.init_with_this_game_state({
@@ -29,9 +29,11 @@ export default class GameLifeCycle {
       executed_moves: [],
     });
     // create local player
-    this.localPlayer = new LocalPlayer(ui, this);
+    this.localPlayer = new LocalPlayer(ui);
+    await this.localPlayer.gather_information();
     // create remote player
     this.remotePlayer = new RemotePlayer();
+    this.on_game_start();
   }
 
   on_game_ended() {
