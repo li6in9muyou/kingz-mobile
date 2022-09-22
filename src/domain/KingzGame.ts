@@ -28,7 +28,7 @@ function move(f, t, count) {
   if (t.isMountain) return;
 
   if (t.troop === null) {
-    t.troop = Troop.buildMine(count);
+    t.troop = new Troop(count, f.troop.troopOwner);
     f.troop.troopCount -= count;
     return;
   }
@@ -84,7 +84,8 @@ export default class KingzGame {
   }
 
   can_continue(): boolean {
-    return false;
+    // TODO: return true iff round_idx<300 && none of the home bases are lost to opponent
+    return true;
   }
 
   get_valid_directions(cellIdx: number): KingzGridDir[] {
