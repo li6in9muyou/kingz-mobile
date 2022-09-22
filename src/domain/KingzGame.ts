@@ -89,6 +89,7 @@ export default class KingzGame {
   }
 
   get_valid_directions(cellIdx: number): KingzGridDir[] {
+    // TODO: cannot move into mountains
     return ["up", "right", "down", "left"];
   }
 

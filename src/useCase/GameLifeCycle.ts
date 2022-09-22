@@ -51,6 +51,8 @@ export default class GameLifeCycle {
   }
 
   on_local_save_game() {
+    // TODO: save game to localStorage
+    // TODO: request cloud to store current game
     print("local player wish to save current game");
   }
 

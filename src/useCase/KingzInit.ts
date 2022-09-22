@@ -10,6 +10,7 @@ export default class {
   }
 
   gen_init_cells() {
+    // TODO: move this back to domain/GameInit.js
     return flow([spawnTerrain, spawnTroops])(this.grid_size);
   }
 }

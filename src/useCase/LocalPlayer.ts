@@ -10,6 +10,7 @@ export default class LocalPlayer {
   static DefaultUser = "Guest";
 
   private ui: IUpdateView & IPromptNickName;
+  // TODO: push this attribute to view layer
   private CurrentUser: string;
   private gather_info_done: (unknown) => void;
 
@@ -25,6 +26,7 @@ export default class LocalPlayer {
   }
 
   on_register(nickname: string) {
+    // TODO: make actual http requests
     this.CurrentUser = nickname;
     print(`on_register, nickname ${nickname}`);
     HttpClient.do_fetch(700, { nickname }).then(() => {
@@ -33,6 +35,7 @@ export default class LocalPlayer {
   }
 
   on_log_out() {
+    // TODO: make actual http requests
     this.CurrentUser = LocalPlayer.DefaultUser;
   }
 

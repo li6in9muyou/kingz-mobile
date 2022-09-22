@@ -28,6 +28,7 @@ export default class PlayGame {
   }
 
   get_deprecated_kingz_play_adapter(): DeprecatedKingzPlayAdapter {
+    // TODO: use new API directly, get rid of this adapter.
     return {
       grid_dim: this.game.grid_dim,
       canCommand: (which: Terrain) => {

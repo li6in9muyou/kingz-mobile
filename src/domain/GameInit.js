@@ -1,6 +1,8 @@
 import { Troop } from "./Troop";
 import { Terrain } from "./Terrain";
 
+// TODO: reject maps that two home bases are blocked by mountains
+
 export function spawnTroops(cells) {
   for (let i = 0; i < cells.length; i++) {
     if (cells[i].isHome) {
