@@ -53,4 +53,10 @@ export default class GameLifeCycle {
   on_local_save_game() {
     print("local player wish to save current game");
   }
+
+  on_wait_remote_move() {
+    this.remotePlayer.subscribe((m) => {
+      this.game.execute_move(m);
+    });
+  }
 }

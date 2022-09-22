@@ -20,6 +20,7 @@ export default class PlayGame {
 
   on_submit_command(move: KingzPlayerMove) {
     this.game.execute_move(move);
+    this.gameLifeCycle.on_wait_remote_move();
     print("player submit %o", move);
     if (!this.game.can_continue()) {
       this.gameLifeCycle.on_game_ended();
