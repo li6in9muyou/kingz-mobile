@@ -4,9 +4,9 @@ import type IPromptNickName from "../port/IPromptNickName";
 import debug from "debug";
 import { HttpClient } from "./Infrastructure";
 
-const print = debug("LocalPlayer");
+const print = debug("LocalIdentity");
 
-export default class LocalPlayer {
+export default class LocalIdentity {
   static DefaultUser = "Guest";
 
   private ui: IUpdateView & IPromptNickName;
@@ -36,11 +36,11 @@ export default class LocalPlayer {
 
   on_log_out() {
     // TODO: make actual http requests
-    this.CurrentUser = LocalPlayer.DefaultUser;
+    this.CurrentUser = LocalIdentity.DefaultUser;
   }
 
   get_nickname(): string {
-    return this.CurrentUser ?? LocalPlayer.DefaultUser;
+    return this.CurrentUser ?? LocalIdentity.DefaultUser;
   }
 
   push_game_state(game_state: KingzGameState) {

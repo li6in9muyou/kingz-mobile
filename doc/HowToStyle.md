@@ -41,8 +41,8 @@
 这里面写了所有的业务逻辑
 
 - `GameLifeCycle`里面写了游戏开始、结束、掉线、每个回合结束时应该调用的函数，写了这些事情发生时要做的事情。
-- `PlayerAgent`里面提供`on_sumbit_command`给`LocalPlayer`和`RemotePlayer`来改变游戏的状态。
-- `LocalPlayer` 和 `RemotePlayer`，前者负责把本地玩家注册到云端，并负责账户的网名、登陆、退出的基本操作。后者储存游戏远端玩家的网名，调用`on_submit_command`来更新本地棋局。
+- `PlayerAgent`里面提供`on_sumbit_command`给`LocalIdentity`和`RemotePlayer`来改变游戏的状态。
+- `LocalIdentity` 和 `RemotePlayer`，前者负责把本地玩家注册到云端，并负责账户的网名、登陆、退出的基本操作。后者储存游戏远端玩家的网名，调用`on_submit_command`来更新本地棋局。
 
 ## `/src/port`
 
@@ -54,7 +54,7 @@
 
 # 名词解释
 
-## 本地玩家和远端玩家 `LocalPlayer` `RemotePlayer`
+## 本地玩家和远端玩家 `LocalIdentity` `RemotePlayer`
 
 对一个客户端来说，本地玩家就是用键盘鼠标等直接输入指令改变棋盘状态的玩家。远端玩家就是由客户端程序代表的一个玩家，他可以是运行在客户端上的电脑，也可以是经过云端中继的在另一个客户端上游玩的玩家。
 

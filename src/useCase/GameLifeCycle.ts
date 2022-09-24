@@ -2,7 +2,7 @@ import KingzInit from "./KingzInit";
 import LiteralGameConfig from "../port/LiteralGameConfig/LiteralGameConfig";
 import KingzGame from "../domain/KingzGame";
 import type IEndGame from "../port/IEndGame";
-import LocalPlayer from "./LocalPlayer";
+import LocalIdentity from "./LocalIdentity";
 import type IUpdateView from "../port/IUpdateView";
 import type IPromptNickName from "../port/IPromptNickName";
 import RemotePlayer from "./RemotePlayer";
@@ -12,7 +12,7 @@ const print = debug("GameLifeCycle");
 
 export default class GameLifeCycle {
   ui: IEndGame & IStartGame;
-  localPlayer: LocalPlayer;
+  localPlayer: LocalIdentity;
   remotePlayer: RemotePlayer;
   game: KingzGame;
 
@@ -29,7 +29,7 @@ export default class GameLifeCycle {
       executed_moves: [],
     });
     // create local player
-    this.localPlayer = new LocalPlayer(ui);
+    this.localPlayer = new LocalIdentity(ui);
     await this.localPlayer.gather_information();
     // create remote player
     this.remotePlayer = new RemotePlayer();

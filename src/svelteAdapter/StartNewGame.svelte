@@ -1,7 +1,7 @@
 <script lang="ts">
-  import LocalPlayer from "../useCase/LocalPlayer";
+  import LocalIdentity from "../useCase/LocalIdentity";
 
-  export let use_case: LocalPlayer;
+  export let use_case: LocalIdentity;
 </script>
 
 <h1>To start new Game, enter a nickname</h1>
