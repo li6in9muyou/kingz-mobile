@@ -7,7 +7,7 @@
   import SveltePort from "./port/SveltePort/SveltePort";
   import GameLifeCycle from "./useCase/GameLifeCycle";
   import KingzInitUseCase from "./useCase/KingzInit";
-  import PlayGame from "./useCase/PlayGame";
+  import PlayerAgent from "./useCase/PlayerAgent";
   import Welcome from "./svelteAdapter/Welcome.svelte";
   import GameOver from "./svelteAdapter/GameOver.svelte";
 
@@ -33,7 +33,7 @@
   function enter_game() {
     gameLifeCycle.on_boot(stores);
     localPlayer = gameLifeCycle.localPlayer;
-    KingzPlayUseCase = new PlayGame(gameLifeCycle.game, gameLifeCycle);
+    KingzPlayUseCase = new PlayerAgent(gameLifeCycle.game, gameLifeCycle);
   }
 
   onMount(() => {

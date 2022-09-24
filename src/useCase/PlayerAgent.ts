@@ -5,9 +5,9 @@ import type { Terrain } from "../domain/Terrain";
 import debug from "debug";
 import type GameLifeCycle from "./GameLifeCycle";
 
-const print = debug("PlayGame");
+const print = debug("PlayerAgent");
 
-export default class PlayGame {
+export default class PlayerAgent {
   private readonly game: KingzGame;
 
   constructor(game: KingzGame, private readonly gameLifeCycle: GameLifeCycle) {
