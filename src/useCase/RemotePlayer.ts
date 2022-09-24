@@ -1,5 +1,11 @@
 import type { KingzPlayerMove } from "../domain/KingzGame";
 
+declare global {
+  interface Window {
+    mock_remote: { move: any };
+  }
+}
+
 export default class RemotePlayer {
   move: Promise<KingzPlayerMove>;
   received_remote_move: (KingzPlayerMove) => void;
