@@ -1,7 +1,7 @@
 import type { Terrain } from "./Terrain";
 import { Troop } from "./Troop";
-import type IUpdateView from "../port/IUpdateView";
 import debug from "debug";
+import type IKingzEnvMove from "../port/IKingzEnvMove";
 
 const print = debug("KingzGame");
 
@@ -13,14 +13,10 @@ export interface KingzPlayerMove {
   troopCount: number;
 }
 
-export interface KingzEnvMove {
-  update(cellIdx: number): Terrain;
-}
-
 export class KingzGameState {
   cells: Terrain[];
   round_idx: number;
-  executed_moves: (KingzEnvMove | KingzPlayerMove)[];
+  executed_moves: (IKingzEnvMove | KingzPlayerMove)[];
 }
 
 function move(f, t, count) {
@@ -65,11 +61,11 @@ function move(f, t, count) {
 
 export default class KingzGame {
   game_state: KingzGameState;
-  ui: IUpdateView;
+  private local_has_moved: boolean = false;
+  private remote_has_moved: boolean = false;
+  private readonly env_moves: IKingzEnvMove[] = [];
 
-  constructor(ui: IUpdateView) {
-    this.ui = ui;
-  }
+  constructor() {}
 
   get game_cells() {
     return this.game_state.cells;
@@ -83,6 +79,10 @@ export default class KingzGame {
     this.game_state = game_state;
   }
 
+  has_both_player_moved() {
+    return this.local_has_moved && this.remote_has_moved;
+  }
+
   can_continue(): boolean {
     // TODO: return true iff round_idx<300 && none of the home bases are lost to opponent
     return true;
@@ -94,14 +94,44 @@ export default class KingzGame {
   }
 
   execute_move(move: KingzPlayerMove) {
+    if (this.has_both_player_moved()) {
+      console.trace();
+      print("error: execute_move is called even if both players have moved");
+      return;
+    }
+    const this_troop = this.game_state.cells[move.cellIdx].troop;
+    if (this_troop.isMine) {
+      this.local_has_moved = true;
+    } else if (this_troop.isEnemy) {
+      this.remote_has_moved = true;
+    } else {
+      throw new Error(`this troop ${this_troop} should not be moved`);
+    }
+
     this.move_troop_impl(move.cellIdx, {
       direction: move.dir,
       count: move.troopCount,
     });
-    this.ui.update_view(this.game_state);
   }
 
-  apply_env_update(update: KingzEnvMove) {}
+  start_next_round() {
+    this.local_has_moved = false;
+    this.remote_has_moved = false;
+    this.game_state.round_idx += 1;
+    for (const env_move of this.env_moves) {
+      this.apply_env_update(env_move);
+    }
+  }
+
+  apply_env_update(m: IKingzEnvMove) {
+    for (let idx = 0; idx < this.game_state.cells.length; idx++) {
+      this.game_state.cells[idx] = m.update(
+        this.game_state[idx],
+        idx,
+        this.game_state
+      );
+    }
+  }
 
   private move_troop_impl(
     which: number,

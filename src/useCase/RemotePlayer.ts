@@ -1,4 +1,4 @@
-import type { KingzPlayerMove } from "../domain/KingzGame";
+import type PlayerAgent from "./PlayerAgent";
 
 declare global {
   interface Window {
@@ -7,26 +7,16 @@ declare global {
 }
 
 export default class RemotePlayer {
-  move: Promise<KingzPlayerMove>;
-  received_remote_move: (KingzPlayerMove) => void;
-
-  constructor() {
-    this.move = new Promise((resolve) => {
-      this.received_remote_move = resolve;
-    });
+  constructor(private readonly playerAgent: PlayerAgent) {
     const t = this;
     window.mock_remote = {
       move(cellIdx, direction, count) {
-        t.received_remote_move({ cellIdx, dir: direction, troopCount: count });
+        t.playerAgent.on_submit_command({
+          cellIdx,
+          dir: direction,
+          troopCount: count,
+        });
       },
     };
-  }
-
-  subscribe(subscriber) {
-    this.move.then(subscriber).then(() => {
-      this.move = new Promise((resolve) => {
-        this.received_remote_move = resolve;
-      });
-    });
   }
 }

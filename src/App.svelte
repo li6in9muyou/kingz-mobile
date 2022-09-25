@@ -34,6 +34,7 @@
     gameLifeCycle.on_boot(stores);
     localPlayer = gameLifeCycle.localPlayer;
     KingzPlayUseCase = new PlayerAgent(gameLifeCycle.game, gameLifeCycle);
+    gameLifeCycle.playerAgent = KingzPlayUseCase;
   }
 
   onMount(() => {

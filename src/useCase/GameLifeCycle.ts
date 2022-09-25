@@ -8,21 +8,20 @@ import type IPromptNickName from "../port/IPromptNickName";
 import RemotePlayer from "./RemotePlayer";
 import type IStartGame from "../port/IStartGame";
 import debug from "debug";
+import type PlayerAgent from "./PlayerAgent";
 const print = debug("GameLifeCycle");
 
 export default class GameLifeCycle {
-  ui: IEndGame & IStartGame;
   localPlayer: LocalIdentity;
   remotePlayer: RemotePlayer;
+  playerAgent: PlayerAgent;
   game: KingzGame;
 
-  constructor(ui: IEndGame & IStartGame) {
-    this.ui = ui;
-  }
+  constructor(private readonly ui: IEndGame & IStartGame & IUpdateView) {}
 
-  async on_boot(ui: IUpdateView & IPromptNickName & IStartGame) {
+  async on_boot(ui: IUpdateView & IPromptNickName) {
     // create game
-    this.game = new KingzGame(ui);
+    this.game = new KingzGame();
     this.game.init_with_this_game_state({
       cells: new KingzInit(new LiteralGameConfig()).gen_init_cells(),
       round_idx: 0,
@@ -32,7 +31,7 @@ export default class GameLifeCycle {
     this.localPlayer = new LocalIdentity(ui);
     await this.localPlayer.gather_information();
     // create remote player
-    this.remotePlayer = new RemotePlayer();
+    this.remotePlayer = new RemotePlayer(this.playerAgent);
     this.on_game_start();
   }
 
@@ -56,9 +55,9 @@ export default class GameLifeCycle {
     print("local player wish to save current game");
   }
 
-  on_wait_remote_move() {
-    this.remotePlayer.subscribe((m) => {
-      this.game.execute_move(m);
-    });
+  on_one_turn_ended() {
+    print("one turn has ended");
+    this.game.start_next_round();
+    this.ui.update_view(this.game.game_state);
   }
 }

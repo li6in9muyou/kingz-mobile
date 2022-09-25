@@ -20,10 +20,13 @@ export default class PlayerAgent {
 
   on_submit_command(move: KingzPlayerMove) {
     this.game.execute_move(move);
-    this.gameLifeCycle.on_wait_remote_move();
     print("player submit %o", move);
     if (!this.game.can_continue()) {
       this.gameLifeCycle.on_game_ended();
+    } else {
+      if (this.game.has_both_player_moved()) {
+        this.gameLifeCycle.on_one_turn_ended();
+      }
     }
   }
 
