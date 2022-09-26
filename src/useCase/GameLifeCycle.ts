@@ -60,4 +60,14 @@ export default class GameLifeCycle {
     this.game.start_next_round();
     this.ui.update_view(this.game.game_state);
   }
+
+  on_command_submitted() {
+    if (!this.game.can_continue()) {
+      this.on_game_ended();
+    } else {
+      if (this.game.has_both_player_moved()) {
+        this.on_one_turn_ended();
+      }
+    }
+  }
 }
