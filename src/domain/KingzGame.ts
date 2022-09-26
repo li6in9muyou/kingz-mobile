@@ -2,6 +2,7 @@ import type { Terrain } from "./Terrain";
 import { Troop } from "./Troop";
 import debug from "debug";
 import type IKingzEnvMove from "../port/IKingzEnvMove";
+import StrongerOverTime from "../useCase/StrongerOverTime";
 
 const print = debug("KingzGame");
 
@@ -63,7 +64,7 @@ export default class KingzGame {
   game_state: KingzGameState;
   private local_has_moved: boolean = false;
   private remote_has_moved: boolean = false;
-  private readonly env_moves: IKingzEnvMove[] = [];
+  private readonly env_moves: IKingzEnvMove[] = [new StrongerOverTime()];
 
   constructor() {}
 
