@@ -6,20 +6,24 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.5",
+    "@testing-library/svelte": "^3.2.1",
     "@tsconfig/svelte": "^2.0.0",
     "@types/debug": "^4.1.7",
     "@types/lodash": "^4.14.185",
+    "jsdom": "^20.0.0",
     "lodash": "latest",
     "svelte": "^3.0.0",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.0",
-    "vite": "^3.1.0"
+    "vite": "^3.1.0",
+    "vitest": "^0.23.4"
   },
   "dependencies": {
     "debug": "^4.3.4"
