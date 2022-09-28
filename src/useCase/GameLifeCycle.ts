@@ -8,7 +8,8 @@ import type IPromptNickName from "../port/IPromptNickName";
 import RemotePlayer from "./RemotePlayer";
 import type IStartGame from "../port/IStartGame";
 import debug from "debug";
-import type PlayerAgent from "./PlayerAgent";
+import PlayerAgent from "./PlayerAgent";
+import ByWebSocket from "../port/RemotePort/ByWebSocket";
 const print = debug("GameLifeCycle");
 
 export default class GameLifeCycle {
@@ -27,11 +28,13 @@ export default class GameLifeCycle {
       round_idx: 0,
       executed_moves: [],
     });
+    // create player agent
+    this.playerAgent = new PlayerAgent(this.game, this);
+    // create remote player
+    this.remotePlayer = new RemotePlayer(this.playerAgent, new ByWebSocket());
     // create local player
     this.localPlayer = new LocalIdentity(ui);
     await this.localPlayer.gather_information();
-    // create remote player
-    this.remotePlayer = new RemotePlayer(this.playerAgent);
     this.on_game_start();
   }
 

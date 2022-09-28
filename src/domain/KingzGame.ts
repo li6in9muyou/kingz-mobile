@@ -127,7 +127,7 @@ export default class KingzGame {
   apply_env_update(m: IKingzEnvMove) {
     for (let idx = 0; idx < this.game_state.cells.length; idx++) {
       this.game_state.cells[idx] = m.update(
-        this.game_state[idx],
+        this.game_state.cells[idx],
         idx,
         this.game_state
       );
