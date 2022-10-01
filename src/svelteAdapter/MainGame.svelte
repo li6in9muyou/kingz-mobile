@@ -29,6 +29,10 @@
     which = -1;
     shouldShowDirection = false;
   }
+
+  let grid_dom;
+  const p = 10;
+  $: w = grid_dom?.clientWidth - 20;
 </script>
 
 {#if shouldShowDirection}
@@ -39,13 +43,17 @@
   />
 {/if}
 
-<main>
+<main style="--GRID_PADDING:{p}px">
   <h1>Hello, Kingz</h1>
   <h2>
     <button on:click={() => gameLifeCycle.on_local_quit()}>quit</button>
     <button>save and quit</button>
   </h2>
-  <div id="Grid" style="--GRID_DIM:{GRID_DIM}">
+  <div
+    id="Grid"
+    style="--GRID_DIM:{GRID_DIM};--ROW_HEIGHT:{w / GRID_DIM}"
+    bind:this={grid_dom}
+  >
     {#each $GameCells as terrain, index}
       <Cell on:cellClicked={() => actionOnCell(index)} {terrain} />
     {/each}
@@ -57,6 +65,7 @@
   #Grid {
     display: grid;
     grid-template-columns: repeat(var(--GRID_DIM), 1fr);
+    grid-template-rows: repeat(var(--GRID_DIM), calc(var(--ROW_HEIGHT) * 1px));
     gap: 3px;
     width: 100%;
     justify-items: center;
@@ -67,6 +76,6 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 0 10px;
+    padding: 0 var(--GRID_PADDING);
   }
 </style>

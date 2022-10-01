@@ -36,7 +36,6 @@
     color: black;
     font-size: 1rem;
     width: 100%;
-    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
