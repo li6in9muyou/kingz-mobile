@@ -41,16 +41,4 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-
-  @keyframes float {
-    0% {
-      transform: translatey(0px);
-    }
-    50% {
-      transform: translatey(-20px);
-    }
-    100% {
-      transform: translatey(0px);
-    }
-  }
 </style>
