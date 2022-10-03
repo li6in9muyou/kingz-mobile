@@ -1,5 +1,6 @@
 <script>
   import { onDestroy } from "svelte";
+  import { slide } from "svelte/transition";
 
   let dots = "";
   const handle = setInterval(() => {
@@ -14,20 +15,27 @@
   });
 </script>
 
-<div id="please-wait">waiting for internet requests{dots}</div>
+<div id="please-wait" transition:slide>
+  waiting for internet requests
+  <div>{dots}</div>
+</div>
 
 <style>
   #please-wait {
     font-family: monospace;
     box-sizing: border-box;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    font-size: 5rem;
+    color: black;
     background-color: lightgreen;
-    color: aliceblue;
-    padding: 2rem;
+    position: fixed;
+    margin: 1rem;
+    bottom: 0;
+    z-index: 999;
+    font-size: 2rem;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  #please-wait > div {
+    min-height: 3rem;
   }
 </style>
